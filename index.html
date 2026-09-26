@@ -1,0 +1,112 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#0b7a53">
+<meta name="description" content="Ti Lekòl Mwen — application éducative hors connexion pour Kindergarten à 3e année fondamentale.">
+<link rel="manifest" href="manifest.json">
+<link rel="stylesheet" href="style.css">
+<title>Ti Lekòl Mwen</title>
+</head>
+<body>
+<header class="topbar">
+  <div>
+    <div class="brand">📚 Ti Lekòl Mwen</div>
+    <div class="tag">Aprann an jwe • Apprendre en jouant</div>
+  </div>
+  <button id="soundToggle" class="iconbtn" aria-label="Activer ou désactiver la voix">🔊</button>
+</header>
+
+<main id="app">
+<section id="home" class="screen active">
+  <div class="hero">
+    <div class="hero-emoji">🌟</div>
+    <h1>Bienvenue !</h1>
+    <p>Choisis ton niveau et commence ton aventure.</p>
+    <button class="primary" onclick="speak('Bienvenue dans Ti Lekòl Mwen. Choisis ton niveau et commence ton aventure !')">🔊 Écouter</button>
+  </div>
+  <h2>🎒 Mon niveau</h2>
+  <div class="grid levels">
+    <button class="card level" onclick="selectLevel('Kindergarten')">🧸<b>Kindergarten</b><small>Découvrir</small></button>
+    <button class="card level" onclick="selectLevel('1re année')">🌱<b>1re année</b><small>Commencer</small></button>
+    <button class="card level" onclick="selectLevel('2e année')">📘<b>2e année</b><small>Progresser</small></button>
+    <button class="card level" onclick="selectLevel('3e année')">🎓<b>3e année</b><small>Maîtriser</small></button>
+  </div>
+  <div class="quick grid">
+    <button class="card" onclick="showScreen('rewards')">🏆<b>Récompenses</b></button>
+    <button class="card" onclick="showScreen('parent')">👨‍👩‍👧<b>Espace parent</b></button>
+    <button class="card" onclick="showScreen('settings')">⚙️<b>Paramètres</b></button>
+  </div>
+</section>
+
+<section id="level" class="screen">
+  <button class="back" onclick="showScreen('home')">← Accueil</button>
+  <div class="hero compact"><div id="levelEmoji" class="hero-emoji">🌱</div><h1 id="levelTitle">Niveau</h1><p>Choisis une matière.</p></div>
+  <div class="grid subjects">
+    <button class="card subject" onclick="openLesson('francais')">📖<b>Français</b><small>Lire, écrire, comprendre</small></button>
+    <button class="card subject" onclick="openLesson('math')">🧮<b>Mathématiques</b><small>Compter et calculer</small></button>
+    <button class="card subject" onclick="openLesson('eveil')">🌍<b>Éveil</b><small>Découvrir le monde</small></button>
+  </div>
+</section>
+
+<section id="lesson" class="screen">
+  <button class="back" onclick="showScreen('level')">← Matières</button>
+  <div class="lesson-head"><span id="lessonIcon">📖</span><div><h1 id="lessonTitle">Français</h1><p id="lessonSub">Apprenons ensemble.</p></div></div>
+  <div id="lessonContent"></div>
+</section>
+
+<section id="quiz" class="screen">
+  <button class="back" onclick="showScreen('lesson')">← Leçon</button>
+  <div class="quizbox">
+    <div class="progress"><span id="quizProgress"></span></div>
+    <div class="quiz-icon" id="quizIcon">⭐</div>
+    <h1 id="question"></h1>
+    <button class="listen" onclick="speakCurrentQuestion()">🔊 Écouter la question</button>
+    <div id="answers" class="answers"></div>
+    <p id="feedback" class="feedback"></p>
+  </div>
+</section>
+
+<section id="rewards" class="screen">
+  <button class="back" onclick="showScreen('home')">← Accueil</button>
+  <div class="hero compact"><div class="hero-emoji">🏆</div><h1>Mes récompenses</h1><p>Chaque effort compte !</p></div>
+  <div class="stats grid">
+    <div class="stat"><span>⭐</span><b id="stars">0</b><small>Étoiles</small></div>
+    <div class="stat"><span>🏅</span><b id="badges">0</b><small>Badges</small></div>
+    <div class="stat"><span>🎯</span><b id="done">0</b><small>Exercices</small></div>
+  </div>
+  <div id="badgeList" class="badgeList"></div>
+</section>
+
+<section id="parent" class="screen">
+  <button class="back" onclick="showScreen('home')">← Accueil</button>
+  <div class="hero compact"><div class="hero-emoji">👨‍👩‍👧</div><h1>Espace parent</h1><p>Un aperçu simple des progrès.</p></div>
+  <div class="parentCard">
+    <label>Prénom de l'enfant</label>
+    <input id="childName" placeholder="Ex. Anaïs" maxlength="30">
+    <button class="primary" onclick="saveChild()">💾 Enregistrer</button>
+    <div id="parentSummary"></div>
+  </div>
+</section>
+
+<section id="settings" class="screen">
+  <button class="back" onclick="showScreen('home')">← Accueil</button>
+  <div class="hero compact"><div class="hero-emoji">⚙️</div><h1>Paramètres</h1></div>
+  <div class="settingsList">
+    <button class="row" onclick="toggleSpeech()"><span>🔊 Synthèse vocale</span><b id="speechState">ON</b></button>
+    <button class="row" onclick="clearProgress()"><span>🗑️ Réinitialiser la progression</span><b>›</b></button>
+    <div class="about"><b>Ti Lekòl Mwen V1</b><br>Application éducative PWA hors connexion.<br><br>Créé avec soin pour apprendre en jouant.</div>
+  </div>
+</section>
+</main>
+
+<nav class="nav">
+<button onclick="showScreen('home')">🏠<span>Accueil</span></button>
+<button onclick="showScreen('rewards')">🏆<span>Récompenses</span></button>
+<button onclick="showScreen('parent')">👨‍👩‍👧<span>Parent</span></button>
+<button onclick="showScreen('settings')">⚙️<span>Réglages</span></button>
+</nav>
+<script src="app.js"></script>
+</body>
+</html>
