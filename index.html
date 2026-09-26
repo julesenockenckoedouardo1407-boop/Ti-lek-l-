@@ -90,11 +90,28 @@
   </div>
 </section>
 
+
+<section id="about" class="screen">
+  <button class="back" onclick="showScreen('settings')">← Paramètres</button>
+  <div class="hero compact">
+    <div class="hero-emoji">ℹ️</div>
+    <h1>À propos</h1>
+    <p>Ti Lekòl Mwen — V1</p>
+  </div>
+  <div class="aboutCard">
+    <h2>📚 Ti Lekòl Mwen</h2>
+    <p>Application éducative pour les élèves de Kindergarten à la 3e année fondamentale.</p>
+    <div class="creator">👨‍🏫 <b>Créé par maître Jules Enock</b></div>
+    <div class="contact">📞 <b>Contact :</b> +509 40409680</div>
+  </div>
+</section>
+
 <section id="settings" class="screen">
   <button class="back" onclick="showScreen('home')">← Accueil</button>
   <div class="hero compact"><div class="hero-emoji">⚙️</div><h1>Paramètres</h1></div>
   <div class="settingsList">
     <button class="row" onclick="toggleSpeech()"><span>🔊 Synthèse vocale</span><b id="speechState">ON</b></button>
+    <button class="row" onclick="showScreen('about')"><span>ℹ️ À propos</span><b>›</b></button>
     <button class="row" onclick="clearProgress()"><span>🗑️ Réinitialiser la progression</span><b>›</b></button>
     <div class="about"><b>Ti Lekòl Mwen V1</b><br>Application éducative PWA hors connexion.<br><br>Créé avec soin pour apprendre en jouant.</div>
   </div>
